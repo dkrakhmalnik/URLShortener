@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="URLShortener.MainPage" xmlns:viewmodels="clr-namespace:URLShortener.ViewModels" 
+             xmlns:models="clr-namespace:URLShortener.Models"
+             x:DataType="viewmodels:MainPageViewModel">
+
+    <VerticalStackLayout>
+        <Grid ColumnSpacing="10" RowSpacing="10" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Entry Placeholder="Enter url" Text="{Binding FullUrl}"  Grid.Column="0"/>
+            <Button Text="Shorten" Command="{Binding AddShortUrlCommand}" Grid.Column="1"/>
+        </Grid>
+        <ListView ItemsSource="{Binding Urls}" x:Name="Urls">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:UrlData">
+                    <TextCell Text="{Binding ShortUrl}" Detail="{Binding FullUrl}" Command="{Binding Source={x:Reference Urls}, Path=BindingContext.OpenLinkCommand}"
+                                        CommandParameter="{Binding ShortUrl}">
+                    </TextCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </VerticalStackLayout>
+</ContentPage>
